@@ -1,52 +1,59 @@
-<hmtl>
-    <head>
-        <style>
-            body {
-                background-color: black;
-                color: gold;
-                margin: auto;
-            }
-        </style>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <body>
-            <h1>Henlo, would you like to take another survey for 100 robux?</h1>
-            <label for="tvShow">What is your favorite TV show?</label>
-            <select name="tvShow">
-                <option value="a">Whose Line is it Anyway?</option>
-                <option value="b">Family Feud</option>
-                <option value="c">The Simpsons</option>
-                <option value="d">It's Always Sunny</option>
-            </select>
-             <button>Cast vote!</button>
-            <div id = "voteHolder">
-            <h2 id = "votes">Total votes so far: </h2>
-            <ul>
-                <li id = "a">Whose Line is it Anyway?<span></span></li>
-                <li id = "b">Family Feud<span></span></li>
-                <li id = "c">The Simpsons<span></span></li>
-                <li id = "d">It's Always Sunny<span></span></li>
-            </ul>
-            </div>
-            <script>$("div#voteHolder").hide()</script>
-            <script>
-                $("button").click(function() {
-                   axios.post('/answer',{
-                        "tvShow":$("select[name='tvShow']").val()
+<html>
+<head>
+    <style>
+        body { 
+            margin: auto;
+            background: black;
+            color: gold;
+        }
+    </style>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>Welcome to the Career Tech Applications Page!</h1>
+    <label for ="courses">Please choose your course:</label>
+    <select name="courses"> 
+        <option value="Northview Comp Sci">Northview Comp Sci</option>
+        <option value="Art">Art</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Interactive Media">Interactive Media</option>
+        <option value="MedTech">MedTech</option>
+        <option value="Cosmotology">Cosmotology</option>
+        <option value="Southview Programming">Southview Programming</option>
+        <option value="Computer Graphics">Computer Graphics</option>
+        <option value="Nuclear Warfare">Nuclear Warfare</option>
+        
+    </select>
+    
+    <button>View Course Applications</button>
+    
+    <div>
+        <h2 id = "choiceTitle">ahhahh</h2>
+        <h3 id = "userName">test</h3>
+        <h3 id = "essay">test</h3>
+        <h3></h3>
+    </div>
+    
+    
+   
+ <script>
+     $("button").click(function() {
+                   axios.post('/received',{
+                       "courses":$("select[name='courses']").val(),
                    })
                     .then(function(response) {
-                      $("div#voteHolder").show();
-                       $("li#a span").text(` ${response.data[0]}`);
-                       $("li#b span").text(` ${response.data[1]}`);
-                       $("li#c span").text(` ${response.data[2]}`);
-                       $("li#d span").text(` ${response.data[3]}`);
-                       console.log(`Votes: A: ${response.data[0]} B: ${response.data[1]} C: ${response.data[2]} D: ${response.data[3]}`)
+                     console.log(response.data);
+                     $("h2#choiceTitle").text(`You chose ${response.data[0].course}`);
+                     $("h3#userName").text(`Name: ${response.data[0].name}`);
+                     $("h3#essay").text(`Name: ${response.data[0].response}`);
+                       
                    })
                     .catch(function(error) {
                        console.log(error);
                    })
                 });
-            </script>
-        </body>
-    </head>
-</hmtl>
+    </script>
+</body>
+</html>
+

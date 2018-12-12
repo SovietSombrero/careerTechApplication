@@ -1,34 +1,31 @@
 const express = require('express');
 const app = express();
-var a=0;   
-var b=0;    
-var c=0;    
-var d=0; 
+const port = 3000; // port variable
+var data = {}; // table to store for contacting user -- may not use
+var fakeData = [
+    {
+    name: "Travis Cox",
+    course: "Northview Comp Sci",
+    response: "Ocean man, take me by the hand, lead me to the land that you understand Ocean man, the voyage to the corner of the globe is a real trip Ocean man, the crust of a tan man imbibed by the sand Soaking up the thirst of the land"
+    }
+    
+];
 app.use(express.static('public'));
 app.use(express.json());
 
-app.post('/answer', (req, res) => {
-    var body = req.body.tvShow;
+
+app.post('/received',(req,res) => { // receive and return to client
+    var body = req.body.courses
     
-    if(body == "a") {
-        a++;
-    }else if (body == "b") {
-        b++;
-    }else if (body == "c") {
-        c++;
-    }else if (body == "d") {
-        d++;
+    if (body == "Northview Comp Sci") {
+        res.send(fakeData);
     }
-    res.send([a,b,c,d]); 
-    
-    console.log(`
-IP: ${req.ip}
-A: ${a}
-B: ${b}
-C: ${c}
-D: ${d}
-   `)
-});
 
+    console.log(`Accessed: ${req.body.courses}`); // bash log
+    console.log(`From IP: ${req.ip}`); // bash log
+})
 
-app.listen(3000, () => {console.log('Listening on Port 3000...')});
+app.listen(port, () => {
+    console.log(`Listening on port ${port}!`);
+})
+
