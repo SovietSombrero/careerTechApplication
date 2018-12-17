@@ -27,27 +27,25 @@
     </select>
     
     <button>View Course Applications</button>
-    
-    <div>
-        <h2 id = "choiceTitle">ahhahh</h2>
-        <h3 id = "userName">test</h3>
-        <h3 id = "essay">test</h3>
-        <h3></h3>
-    </div>
-    
-    
-   
+    <div id = "textHolder"></div>
  <script>
+     var course;
      $("button").click(function() {
+         course = $("select#courses").val();
                    axios.post('/received',{
                        "courses":$("select[name='courses']").val(),
                    })
                     .then(function(response) {
-                     console.log(response.data);
-                     $("h2#choiceTitle").text(`You chose ${response.data[0].course}`);
-                     $("h3#userName").text(`Name: ${response.data[0].name}`);
-                     $("h3#essay").text(`Name: ${response.data[0].response}`);
-                       
+                       //let $table = $(`<table><tr><td>${response.data[0]}</td></tr><tr><td></td></tr></table>`);
+                       for (let i = 0; i < response.data.length; i++) {
+                           let $table = $("<table></table>")
+                            .append($("<tr></tr>")
+                                .append($("<td></td>").text(response.data[i].name)))
+                            .append($("<tr></tr>")
+                                .append($("<td></td>").text(response.data[i].response)))
+                           .append($("<tr></tr>"));
+                       $("div#textHolder").append($table);
+                       }
                    })
                     .catch(function(error) {
                        console.log(error);
